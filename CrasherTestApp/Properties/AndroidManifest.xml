@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="internalOnly" package="com.crasher.android.mono" android:versionCode="1">
+  <application android:label="CrasherTestApp">
+  </application>
+  <uses-sdk android:minSdkVersion="7" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.READ_LOGS" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+</manifest>
