@@ -3,6 +3,7 @@ using System.Linq;
 using Android.App;
 using Android.Util;
 using Mono.Android.Crasher.Attributes;
+using Mono.Android.Crasher.Data;
 using Mono.Android.Crasher.Data.Submit;
 
 namespace Mono.Android.Crasher
@@ -13,10 +14,11 @@ namespace Mono.Android.Crasher
                                                               ReportField.ReportID, ReportField.AppVersionCode, ReportField.AppVersionName, ReportField.PackageName,
                                                               ReportField.FilePath, ReportField.PhoneModel, ReportField.Brand, ReportField.Product, ReportField.AndroidVersion, ReportField.Build, ReportField.TotalMemSize, ReportField.AvailableMemSize,
                                                               ReportField.IsSilent, ReportField.StackTrace, ReportField.InitialConfiguration, ReportField.CrashConfiguration, ReportField.Display, ReportField.UserComment,
-                                                              ReportField.UserAppStartDate, ReportField.UserCrashDate, ReportField.DumpsysMeminfo, ReportField.Dropbox, ReportField.Logcat, ReportField.Eventslog, ReportField.Radiolog,
+                                                              ReportField.UserAppStartDate, ReportField.UserCrashDate, ReportField.DumpsysMeminfo, ReportField.Logcat, ReportField.Eventslog, ReportField.Radiolog,
                                                               ReportField.DeviceID, ReportField.InstallationID, ReportField.DeviceFeatures, ReportField.Environment, ReportField.SharedPreferences,
                                                               ReportField.SettingsSystem, ReportField.SettingsSecure 
                                                           };
+
         private static CrasherAttribute _config;
         private static Application _application;
 
@@ -51,7 +53,15 @@ namespace Mono.Android.Crasher
             }
 
             Log.Debug(Constants.LOG_TAG, "CrasherAttribute is enabled for " + _application.PackageName + ", intializing...");
-            _exceptionProcessor = new ExceptionProcessor(_application.ApplicationContext);
+            _exceptionProcessor = new ExceptionProcessor(_application.ApplicationContext, _config.ReportContent ?? DefaultReportFields);
+
+            if (_config.UseCustomData && _config.CustomDataProviders != null)
+            {
+                foreach (var customDataProvider in _config.CustomDataProviders)
+                {
+                    _exceptionProcessor.AddCustomReportDataProvider(Activator.CreateInstance(customDataProvider) as ICustomReportDataProvider);
+                }
+            }
         }
 
         public static void AttachSender<T>(Func<T> valueFactory) where T : class, IReportSender
@@ -59,7 +69,7 @@ namespace Mono.Android.Crasher
             if (_application == null || _exceptionProcessor == null)
                 throw new InvalidOperationException("Need to call AttachSender method after Initialize");
 
-            //TODO Wait for new version of MonoDroid to use reflection from instantiation
+            //TODO Wait for new version of MonoDroid to use reflection for instantiation
             //var sender = Activator.CreateInstance(typeof(T)) as IReportSender;
             var sender = valueFactory();
             if (sender == null)

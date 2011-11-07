@@ -12,7 +12,7 @@ namespace Mono.Android.Crasher.Data.Collectors
         public static string CollectSystemSettings(Context ctx)
         {
             var result = new StringBuilder();
-            var fields = typeof(Settings.System).GetFields(BindingFlags.Public);
+            var fields = typeof(Settings.System).GetFields(BindingFlags.Static | BindingFlags.Public);
             foreach (var field in fields)
             {
                 if (field.FieldType == typeof(string))
@@ -37,10 +37,10 @@ namespace Mono.Android.Crasher.Data.Collectors
         public static string CollectSecureSettings(Context ctx)
         {
             var result = new StringBuilder();
-            var fields = typeof(Settings.Secure).GetFields(BindingFlags.Public);
+            var fields = typeof(Settings.Secure).GetFields(BindingFlags.Static | BindingFlags.Public);
             foreach (var field in fields)
             {
-                if (field.FieldType != typeof (string)) continue;
+                if (field.FieldType != typeof(string)) continue;
                 try
                 {
                     var value = Settings.Secure.GetString(ctx.ContentResolver, (string)field.GetValue(null));

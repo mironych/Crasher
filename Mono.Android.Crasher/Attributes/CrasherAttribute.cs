@@ -1,36 +1,25 @@
 ﻿using System;
+using System.Linq;
+using Mono.Android.Crasher.Data;
 
 namespace Mono.Android.Crasher.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class CrasherAttribute : Attribute
     {
-        ReportingInteractionMode _mode = ReportingInteractionMode.Silent;
-        int _dropboxCollectionMinutes = 5;
+        public CrasherAttribute()
+        {
+            UseCustomData = true;
+            ReportContent = null;
+        }
+
+        InteractionMode _mode = InteractionMode.Silent;
         string[] _logcatArguments = { "-t", "200", "-v", "time" };
 
-        public bool IncludeDropBoxSystemTags
-        {
-            get;
-            set;
-        }
-
-        public string[] AdditionalDropBoxTags
-        {
-            get;
-            set;
-        }
-
-        public ReportingInteractionMode Mode
+        public InteractionMode Mode
         {
             get { return _mode; }
             set { _mode = value; }
-        }
-
-        public int DropBoxCollectionMinutes
-        {
-            get { return _dropboxCollectionMinutes; }
-            set { _dropboxCollectionMinutes = value; }
         }
 
         public string[] LogcatArguments
@@ -39,12 +28,36 @@ namespace Mono.Android.Crasher.Attributes
             set { _logcatArguments = value; }
         }
 
-        public ReportField[] CustomReportContent
+        public ReportField[] ReportContent
         {
             get;
             set;
         }
 
-        public string[] AdditionalSharedPreferences { get; set; }
+        public string[] AdditionalSharedPreferences
+        {
+            get;
+            set;
+        }
+
+        public bool UseCustomData
+        {
+            get;
+            set;
+        }
+
+        private Type[] _customDataProviders;
+        public Type[] CustomDataProviders
+        {
+            get { return _customDataProviders; }
+            set
+            {
+                if (!value.All(type => type.GetInterfaces().Contains(typeof(ICustomReportDataProvider))))
+                {
+                    throw new ArgumentException("Type is not instance of ICustomReportDataProvider");
+                }
+                _customDataProviders = value;
+            }
+        }
     }
 }

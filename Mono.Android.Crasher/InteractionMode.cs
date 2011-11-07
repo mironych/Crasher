@@ -1,6 +1,6 @@
 ﻿namespace Mono.Android.Crasher
 {
-    public enum ReportingInteractionMode
+    public enum InteractionMode
     {
         /**
         * No interaction, reports are sent silently and a "Force close" dialog

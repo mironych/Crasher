@@ -16,17 +16,20 @@ namespace Mono.Android.Crasher
     class ExceptionProcessor : Object
     {
         private readonly Context _context;
+        private readonly ReportField[] _reportFields;
         private readonly List<IReportSender> _reportSenders = new List<IReportSender>();
-        private readonly ReportingInteractionMode _reportingInteractionMode;
+        private readonly InteractionMode _interactionMode;
         private readonly Time _appStartDate;
         private readonly string _initialConfiguration;
+        private readonly IList<ICustomReportDataProvider> _customReportDataProviders = new List<ICustomReportDataProvider>();
 
-        public ExceptionProcessor(Context context)
+        public ExceptionProcessor(Context context, ReportField[] reportFields)
         {
             _context = context;
+            _reportFields = reportFields;
             _appStartDate = new Time();
             _appStartDate.SetToNow();
-            _reportingInteractionMode = CrashManager.Config.Mode;
+            _interactionMode = CrashManager.Config.Mode;
             _initialConfiguration = ReportUtils.GetCrashConfiguration(_context);
             AndroidEnvironment.UnhandledExceptionRaiser += AndroidEnvironmentUnhandledExceptionRaiser;
         }
@@ -36,8 +39,17 @@ namespace Mono.Android.Crasher
             ProcessException(Throwable.FromException(e.Exception));
         }
 
-        private static readonly object _reportersListLocker = new object();
+        private static readonly object _customReportDataProvidersLocker = new object();
+        public void AddCustomReportDataProvider(ICustomReportDataProvider sender)
+        {
+            lock (_customReportDataProvidersLocker)
+            {
+                if (_customReportDataProviders.Contains(sender)) return;
+                _customReportDataProviders.Add(sender);
+            }
+        }
 
+        private static readonly object _reportersListLocker = new object();
         public void AddReportSender(IReportSender sender)
         {
             lock (_reportersListLocker)
@@ -60,9 +72,26 @@ namespace Mono.Android.Crasher
         {
             Log.Error(Constants.LOG_TAG, "Caught a " + th.GetType().Name + " exception for " + _context.PackageName + ". Start building report.");
 
-            var data = ReportDataFactory.BuildReportData(_context, CrashManager.DefaultReportFields, _appStartDate,
+            var data = ReportDataFactory.BuildReportData(_context, _reportFields, _appStartDate,
                                                          _initialConfiguration, th,
-                                                         _reportingInteractionMode == ReportingInteractionMode.Silent);
+                                                         _interactionMode == InteractionMode.Silent);
+
+            Parallel.ForEach(_customReportDataProviders, s =>
+                                                            {
+                                                                try
+                                                                {
+                                                                    var cdata = s.GetReportData(_context);
+                                                                    foreach (var d in cdata)
+                                                                    {
+                                                                        data.Add(d);
+                                                                    }
+                                                                }
+                                                                catch (Exception e)
+                                                                {
+                                                                    Log.Error(Constants.LOG_TAG, Throwable.FromException(e), "Error getting custom data from " + s.GetType().Name);
+                                                                }
+                                                            });
+
             Log.Debug(Constants.LOG_TAG, "Start sending report");
             Parallel.ForEach(_reportSenders, s =>
                                                  {

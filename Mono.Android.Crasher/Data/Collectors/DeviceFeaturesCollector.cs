@@ -9,17 +9,22 @@ namespace Mono.Android.Crasher.Data.Collectors
     {
         public static string GetFeatures(Context ctx)
         {
-            if (Compatibility.APILevel < 5)
+            if (Compatibility.APILevel < 7)
             {
-                return "Data available only with API Level >= 5";
+                return "Data available only with API Level >= 7";
             }
             var result = new StringBuilder();
             try
             {
-                foreach (var feature in ctx.PackageManager.GetSystemAvailableFeatures())
+                var getSystemAvailableFeaturesMethod =
+                    ctx.PackageManager.GetType().GetMethod("GetSystemAvailableFeatures");
+                if (getSystemAvailableFeaturesMethod == null) return string.Empty;
+                var features = (object[])getSystemAvailableFeaturesMethod.Invoke(ctx.PackageManager, null);
+                foreach (var feature in features)
                 {
-                    result.Append(feature.Name);
-                    result.AppendLine();
+                    var nameProperty = feature.GetType().GetProperty("Name");
+                    if (nameProperty == null) continue;
+                    result.Append(nameProperty.GetValue(feature, null)).AppendLine();
                 }
             }
             catch (Exception e)

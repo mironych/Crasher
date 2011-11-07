@@ -32,8 +32,10 @@ namespace Mono.Android.Crasher.Utils
         {
             try
             {
-                var tm = TelephonyManager.FromContext(context);
-                return tm.DeviceId;
+                using (var tm = TelephonyManager.FromContext(context))
+                {
+                    return tm.DeviceId;
+                }
             }
             catch (RuntimeException e)
             {

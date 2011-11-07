@@ -12,11 +12,11 @@ namespace Mono.Android.Crasher.Data.Submit
     /// </summary>
     public class EmailReportSender : IReportSender
     {
-        private EmailReporterAttribute _config;
+        private EmailReporterSettingsAttribute _config;
 
         public void Initialize(Application application)
         {
-            _config = application.GetType().GetCustomAttributes(typeof(EmailReporterAttribute), false).SingleOrDefault() as EmailReporterAttribute;
+            _config = application.GetType().GetCustomAttributes(typeof(EmailReporterSettingsAttribute), false).SingleOrDefault() as EmailReporterSettingsAttribute;
             if (_config == null) throw new InvalidOperationException("Application class need to be marked with EmailReporterAttribute");
         }
 

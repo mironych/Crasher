@@ -97,11 +97,6 @@
          */
         DumpsysMeminfo,
         /**
-         * Content of the android.os.DropBoxManager (introduced in API level 8).
-         * Requires READ_LOGS permission.
-         */
-        Dropbox,
-        /**
          * Logcat default extract. Requires READ_LOGS permission.
          */
         Logcat,

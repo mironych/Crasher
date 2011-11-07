@@ -58,7 +58,7 @@ namespace Mono.Android.Crasher.Data
 
                 if (reportFields.Contains(ReportField.Build))
                 {
-                    crashReportData.Add(ReportField.Build, ReflectionCollector.CollectFields(typeof(Build)));
+                    crashReportData.Add(ReportField.Build, ReflectionCollector.CollectStaticProperties(typeof(Build)));
                 }
 
                 if (reportFields.Contains(ReportField.PhoneModel))
@@ -174,10 +174,6 @@ namespace Mono.Android.Crasher.Data
                     if (reportFields.Contains(ReportField.Radiolog))
                     {
                         crashReportData.Add(ReportField.Radiolog, LogCatCollector.CollectLogCat("radio"));
-                    }
-                    if (reportFields.Contains(ReportField.Dropbox))
-                    {
-                        crashReportData.Add(ReportField.Dropbox, DropBoxCollector.Read(context, CrashManager.Config.AdditionalDropBoxTags));
                     }
                 }
                 else

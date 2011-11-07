@@ -13,13 +13,13 @@ namespace Mono.Android.Crasher.Data.Submit
     public class GoogleFormSender : IReportSender
     {
         private Uri _formUrl;
-        private GoogleFormReporterAttribute _config;
+        private GoogleFormReporterSettingsAttribute _config;
 
         public void Initialize(Application application)
         {
             _config =
-                application.GetType().GetCustomAttributes(typeof(GoogleFormReporterAttribute), false).SingleOrDefault()
-                as GoogleFormReporterAttribute;
+                application.GetType().GetCustomAttributes(typeof(GoogleFormReporterSettingsAttribute), false).SingleOrDefault()
+                as GoogleFormReporterSettingsAttribute;
             if (_config == null)
                 throw new ArgumentException("Application class need to be marked with GoogleFormReporterAttribute");
             if (string.IsNullOrEmpty(_config.FormKey))
@@ -74,7 +74,7 @@ namespace Mono.Android.Crasher.Data.Submit
             return result;
         }
 
-        private static IDictionary<string, string> Remap(IEnumerable<KeyValuePair<ReportField, string>> report)
+        private static IDictionary<string, string> Remap(IEnumerable<KeyValuePair<string, string>> report)
         {
             var inputId = 0;
             return report.ToDictionary(originalKey => "entry." + inputId++ + ".single", originalKey => originalKey.Value);

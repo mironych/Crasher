@@ -8,8 +8,8 @@ using Mono.Android.Crasher.Data.Submit;
 namespace CrasherTestApp
 {
     [Application]
-    [Crasher]
-    [GoogleFormReporter("dGtDcHdYUkZQaS15S20tN01XS2FJZkE6MQ")]
+    [Crasher(UseCustomData = true, CustomDataProviders = new[] { typeof(TestAppCustomDataReportProvider) })]
+    [GoogleFormReporterSettings("dGtDcHdYUkZQaS15S20tN01XS2FJZkE6MQ")]
     public class CrasherTestApplication : Application
     {
         public CrasherTestApplication(IntPtr doNotUse, JniHandleOwnership transfer)

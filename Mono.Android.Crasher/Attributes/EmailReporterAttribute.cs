@@ -3,9 +3,9 @@
 namespace Mono.Android.Crasher.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class EmailReporterAttribute : Attribute
+    public class EmailReporterSettingsAttribute : Attribute
     {
-        public EmailReporterAttribute(string to, string @from, string subject, string host, int port, string login, string password, bool useSSL = false)
+        public EmailReporterSettingsAttribute(string to, string @from, string subject, string host, int port, string login, string password, bool useSSL = false)
         {
             To = to;
             From = @from;

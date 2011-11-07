@@ -13,11 +13,7 @@ namespace Mono.Android.Crasher.Data.Collectors
             var meminfo = new StringBuilder();
             try
             {
-                var commandLine = new List<string>();
-                commandLine.Add("dumpsys");
-                commandLine.Add("meminfo");
-                commandLine.Add(Process.MyPid().ToString());
-
+                var commandLine = new List<string> {"dumpsys", "meminfo", Process.MyPid().ToString()};
                 using (var process = Java.Lang.Runtime.GetRuntime().Exec(commandLine.ToArray()))
                 {
                     using (var reader = new StreamReader(process.InputStream))
