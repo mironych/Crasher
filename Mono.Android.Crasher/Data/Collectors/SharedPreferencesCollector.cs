@@ -5,8 +5,16 @@ using Android.Preferences;
 
 namespace Mono.Android.Crasher.Data.Collectors
 {
+    /// <summary>
+    /// Collects data from SharedPreferences files
+    /// </summary>
     static class SharedPreferencesCollector
     {
+        /// <summary>
+        /// Collects data from preferences files setuped in CrasherAttribute.AdditionalSharedPreferences 
+        /// </summary>
+        /// <param name="context">Context for the application being reported.</param>
+        /// <returns>>A human readable String containing one key=value pair per line.</returns>
         public static string Collect(Context context)
         {
             var result = new StringBuilder();

@@ -10,6 +10,9 @@ using System.Web;
 
 namespace Mono.Android.Crasher.Data.Submit
 {
+    /// <summary>
+    /// Submits report data to shared Google form
+    /// </summary>
     public class GoogleFormSender : IReportSender
     {
         private Uri _formUrl;
@@ -30,16 +33,13 @@ namespace Mono.Android.Crasher.Data.Submit
         public void Send(ReportData errorContent)
         {
             var formParams = Remap(errorContent);
-
             formParams.Add("pageNumber", "0");
             formParams.Add("backupCache", "");
             formParams.Add("submit", "Submit");
-
             try
             {
                 Log.Debug(Constants.LOG_TAG, "Sending report # " + errorContent[ReportField.ReportID]);
-                Log.Debug(Constants.LOG_TAG, "Connect to " + _formUrl);
-
+                Log.Debug(Constants.LOG_TAG, "Connecting to " + _formUrl.Host);
                 var request = (HttpWebRequest)WebRequest.Create(_formUrl);
                 request.Timeout = _config.ConnectionTimeout;
                 request.Method = "POST";

@@ -7,17 +7,26 @@ using Java.Lang;
 
 namespace Mono.Android.Crasher.Utils
 {
+    /// <summary>
+    /// Creates a file storing a ID on the first application start. This ID can then be used as a identifier 
+    /// of this specific application installation.
+    /// </summary>
     class Installation
     {
         private static string _sID;
-        private const string INSTALLATION = "Crasher-INSTALLATION";
+        private const string InstallationFileName = "Crasher-INSTALLATION";
         private static readonly object _locker = new object();
 
+        /// <summary>
+        /// Get or create ID of current application installation
+        /// </summary>
+        /// <param name="context">Context for the application being reported.</param>
+        /// <returns>ID of current application installation</returns>
         public static string Id(Context context)
         {
             if (_sID == null)
             {
-                var installation = new File(context.FilesDir, INSTALLATION);
+                var installation = new File(context.FilesDir, InstallationFileName);
                 try
                 {
                     if (!installation.Exists())
@@ -44,6 +53,11 @@ namespace Mono.Android.Crasher.Utils
             return _sID;
         }
 
+        /// <summary>
+        /// Reads installation ID from file.
+        /// </summary>
+        /// <param name="installation">File to read ID from</param>
+        /// <returns>Application installation ID</returns>
         private static string ReadInstallationFile(File installation)
         {
             var f = new RandomAccessFile(installation, "r");
@@ -59,6 +73,10 @@ namespace Mono.Android.Crasher.Utils
             return Encoding.UTF8.GetString(bytes);
         }
 
+        /// <summary>
+        /// Generates and writes ID of application installation to file.
+        /// </summary>
+        /// <param name="installation">File to write ID</param>
         private static void WriteInstallationFile(File installation)
         {
             var o = new FileOutputStream(installation);

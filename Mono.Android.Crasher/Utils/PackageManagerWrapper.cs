@@ -5,6 +5,9 @@ using Java.Lang;
 
 namespace Mono.Android.Crasher.Utils
 {
+    /// <summary>
+    ///  Responsible for wrapping calls to PackageManager to ensure that they always complete without throwing RuntimeExceptions.
+    /// </summary>
     class PackageManagerWrapper
     {
         private readonly Context _context;
@@ -14,6 +17,11 @@ namespace Mono.Android.Crasher.Utils
             _context = context;
         }
 
+        /// <summary>
+        /// With this method you can check application permissions
+        /// </summary>
+        /// <param name="permission">Manifest.Permission to check whether it has been granted.</param>
+        /// <returns>true if the permission has been granted to the app, false if it hasn't been granted or the PackageManager could not be contacted.</returns>
         public bool HasPermission(string permission)
         {
             var pm = _context.PackageManager;
@@ -32,6 +40,10 @@ namespace Mono.Android.Crasher.Utils
             }
         }
 
+        /// <summary>
+        /// Get PackageInfo from PackageManager
+        /// </summary>
+        /// <returns>PackageInfo for the current application or null if the PackageManager could not be contacted.</returns>
         public PackageInfo GetPackageInfo()
         {
             var pm = _context.PackageManager;

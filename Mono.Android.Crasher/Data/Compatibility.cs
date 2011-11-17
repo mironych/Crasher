@@ -5,11 +5,17 @@ namespace Mono.Android.Crasher.Data
 {
     class Compatibility
     {
-        public static int APILevel
+        /// <summary>
+        /// Retrieves Android SDK API level using the best possible method
+        /// </summary>
+        public static int ApiLevel
         {
             get { return Build.VERSION.SdkInt; }
         }
 
+        /// <summary>
+        /// Retrieve the DropBoxManager service name using reflection API.
+        /// </summary>
         public static string DropBoxServiceName
         {
             get

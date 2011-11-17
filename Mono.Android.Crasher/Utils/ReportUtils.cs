@@ -1,33 +1,57 @@
-﻿using Android.Content;
+﻿using System;
+using Android.Content;
 using Android.OS;
 using Android.Telephony;
 using Android.Util;
 using Android.Views;
 using Java.Lang;
+using Environment = Android.OS.Environment;
 using StringBuilder = System.Text.StringBuilder;
 
 namespace Mono.Android.Crasher.Utils
 {
+    /// <summary>
+    /// Responsible for providing base utilities used when constructing the report.
+    /// </summary>
     class ReportUtils
     {
-        public static long GetAvailableInternalMemorySize()
+        /// <summary>
+        /// Calculates the free memory of the device. This is based on an inspection of the filesystem, which in android
+        /// devices is stored in RAM. Number of bytes available.
+        /// </summary>
+        public static long AvailableInternalMemorySize
         {
-            var path = Environment.DataDirectory;
-            var stat = new StatFs(path.Path);
-            long blockSize = stat.BlockSize;
-            long availableBlocks = stat.AvailableBlocks;
-            return availableBlocks * blockSize;
+            get
+            {
+                var path = Environment.DataDirectory;
+                var stat = new StatFs(path.Path);
+                long blockSize = stat.BlockSize;
+                long availableBlocks = stat.AvailableBlocks;
+                return availableBlocks * blockSize;
+            }
         }
 
-        public static long GetTotalInternalMemorySize()
+        /// <summary>
+        /// Calculates the total memory of the device. This is based on an inspection of the filesystem, which in android
+        /// devices is stored in RAM. Total number of bytes.
+        /// </summary>
+        public static long TotalInternalMemorySize
         {
-            var path = Environment.DataDirectory;
-            var stat = new StatFs(path.Path);
-            var blockSize = stat.BlockSize;
-            var totalBlocks = stat.BlockCount;
-            return totalBlocks * blockSize;
+            get
+            {
+                var path = Environment.DataDirectory;
+                var stat = new StatFs(path.Path);
+                var blockSize = stat.BlockSize;
+                var totalBlocks = stat.BlockCount;
+                return totalBlocks * blockSize;
+            }
         }
 
+        /// <summary>
+        /// Returns the DeviceId according to the TelephonyManager.
+        /// </summary>
+        /// <param name="context">Context for the application being reported</param>
+        /// <returns>Returns the DeviceId according to the TelephonyManager or null if there is no TelephonyManager.</returns>
         public static string GetDeviceId(Context context)
         {
             try
@@ -44,6 +68,11 @@ namespace Mono.Android.Crasher.Utils
             }
         }
 
+        /// <summary>
+        /// Returns Application file path
+        /// </summary>
+        /// <param name="context">Context for the application being reported</param>
+        /// <returns>Returns Application file path</returns>
         public static string GetApplicationFilePath(Context context)
         {
             var filesDir = context.FilesDir;
@@ -55,6 +84,12 @@ namespace Mono.Android.Crasher.Utils
             return "Couldn't retrieve ApplicationFilePath";
         }
 
+        /// <summary>
+        /// Returns a String representation of the content of a Android.View.Display object.
+        /// </summary>
+        /// <param name="context">Context for the application being reported.</param>
+        /// <returns>A String representation of the content of the default Display of the Window Service.</returns>
+        [Obsolete("IWindowManager is not accessible in MonoDroid 1.9.2")]
         public static string GetDisplayDetails(Context context)
         {
             try
@@ -87,6 +122,11 @@ namespace Mono.Android.Crasher.Utils
             }
         }
 
+        /// <summary>
+        /// Returns the current Configuration for this application.
+        /// </summary>
+        /// <param name="context">Context for the application being reported.</param>
+        /// <returns>A String representation of the current configuration for the application.</returns>
         public static string GetCrashConfiguration(Context context)
         {
             try

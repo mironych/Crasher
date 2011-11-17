@@ -10,6 +10,9 @@ namespace Mono.Android.Crasher
 {
     public static class CrashManager
     {
+        /// <summary>
+        /// Default report fields that will be used if CrasherAttribute.ReportContent not set.
+        /// </summary>
         public static ReportField[] DefaultReportFields = {
                                                               ReportField.ReportID, ReportField.AppVersionCode, ReportField.AppVersionName, ReportField.PackageName,
                                                               ReportField.FilePath, ReportField.PhoneModel, ReportField.Brand, ReportField.Product, ReportField.AndroidVersion, ReportField.Build, ReportField.TotalMemSize, ReportField.AvailableMemSize,
@@ -22,7 +25,7 @@ namespace Mono.Android.Crasher
         private static CrasherAttribute _config;
         private static Application _application;
 
-        public static CrasherAttribute Config
+        internal static CrasherAttribute Config
         {
             get
             {
@@ -31,11 +34,18 @@ namespace Mono.Android.Crasher
         }
 
         private static ExceptionProcessor _exceptionProcessor;
+        /// <summary>
+        /// Instance of ExceptionProcessor attached to current application.
+        /// </summary>
         internal static ExceptionProcessor ExceptionProcessor
         {
             get { return _exceptionProcessor; }
         }
 
+        /// <summary>
+        /// Make basic Crasher initializations to handle exceptions from Application
+        /// </summary>
+        /// <param name="app">Application instance to monitor for exceptions.</param>
         public static void Initialize(Application app)
         {
             if (_application != null)
@@ -64,6 +74,11 @@ namespace Mono.Android.Crasher
             }
         }
 
+        /// <summary>
+        /// Add sender to senders list.
+        /// </summary>
+        /// <typeparam name="T">Implementaion of IReportSender</typeparam>
+        /// <param name="valueFactory">Function that constructs new instance of sender</param>
         public static void AttachSender<T>(Func<T> valueFactory) where T : class, IReportSender
         {
             if (_application == null || _exceptionProcessor == null)
@@ -78,6 +93,11 @@ namespace Mono.Android.Crasher
             _exceptionProcessor.AddReportSender(sender);
         }
 
+        /// <summary>
+        /// Remove sender from senders list.
+        /// </summary>
+        /// <typeparam name="T">Implementaion of IReportSender</typeparam>
+        /// <param name="reporter">ReportSender to remove from senders list</param>
         public static void DetachSender<T>(T reporter) where T : IReportSender
         {
             if (_application == null || _exceptionProcessor == null)
@@ -85,18 +105,29 @@ namespace Mono.Android.Crasher
             _exceptionProcessor.RemoveReportSender(reporter);
         }
 
+        /// <summary>
+        /// Process handled exception
+        /// </summary>
+        /// <param name="exception">Handled exception</param>
         public static void HandleException(Exception exception)
         {
             if (exception != null)
                 HandleException(Java.Lang.Throwable.FromException(exception));
         }
 
+        /// <summary>
+        /// Process handled exception
+        /// </summary>
+        /// <param name="tr">Handled Throwable that caused exception</param>
         public static void HandleException(Java.Lang.Throwable tr)
         {
             if (_exceptionProcessor != null)
                 _exceptionProcessor.ProcessException(tr);
         }
 
+        /// <summary>
+        /// Stop proccessing application exceptions
+        /// </summary>
         public static void Stop()
         {
             if (_exceptionProcessor != null)

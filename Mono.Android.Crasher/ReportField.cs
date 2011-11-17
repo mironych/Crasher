@@ -2,144 +2,144 @@
 {
     public enum ReportField
     {
-        /**
-        * Report Identifier
-        */
+        /// <summary>
+        /// Report Identifier
+        /// </summary>
         ReportID,
-        /**
-         * Application version code. This is the incremental integer version code
-         * used to differentiate versions on the android market.
-         * @see android.content.pm.PackageInfo#versionCode
-         */
+        /// <summary>
+        /// Application version code. This is the incremental integer version code
+        /// used to differentiate versions on the android market.
+        /// see android.content.pm.PackageInfo#versionCode
+        /// </summary>
         AppVersionCode,
-        /**
-         * Application version name.
-         * @see android.content.pm.PackageInfo#versionName
-         */
+        /// <summary>
+        /// Application version name.
+        /// see android.content.pm.PackageInfo#versionName
+        /// </summary>
         AppVersionName,
-        /**
-         * Application package name.
-         * @see android.content.Context#getPackageName()
-         */
+        /// <summary>
+        /// Application package name.
+        /// see android.content.Context#getPackageName()
+        /// </summary>
         PackageName,
-        /**
-         * Base path of the application's private file folder.
-         * @see android.content.Context#getFilesDir()
-         */
+        /// <summary>
+        /// Base path of the application's private file folder.
+        /// see android.content.Context#getFilesDir()
+        /// </summary>
         FilePath,
-        /**
-         * Device model name.
-         * @see android.os.Build#MODEL
-         */
+        /// <summary>
+        /// Device model name.
+        /// see android.os.Build#MODEL
+        /// </summary>
         PhoneModel,
-        /**
-         * Device android version name.
-         * @see android.os.Build.VERSION#RELEASE
-         */
+        /// <summary>
+        /// Device android version name.
+        /// see android.os.Build.VERSION#RELEASE
+        /// </summary>
         AndroidVersion,
-        /**
-         * Android Build details.
-         * @see android.os.Build
-         */
+        /// <summary>
+        /// Android Build details.
+        /// see android.os.Build
+        /// </summary>
         Build,
-        /**
-         * Device brand (manufacturer or carrier).
-         * @see android.os.Build#BRAND
-         */
+        /// <summary>
+        /// Device brand (manufacturer or carrier).
+        /// see android.os.Build#BRAND
+        /// </summary>
         Brand,
-        /**
-         * Device overall product code.
-         * @see android.os.Build#PRODUCT
-         */
+        /// <summary>
+        /// Device overall product code.
+        /// see android.os.Build#PRODUCT
+        /// </summary>
         Product,
-        /**
-         * Estimation of the total device memory size based on filesystem stats.
-         */
+        /// <summary>
+        /// Estimation of the total device memory size based on filesystem stats.
+        /// </summary>
         TotalMemSize,
-        /**
-         * Estimation of the available device memory size based on filesystem stats.
-         */
+        /// <summary>
+        /// Estimation of the available device memory size based on filesystem stats.
+        /// </summary>
         AvailableMemSize,
-        /**
-         * The Holy Stack Trace.
-         */
+        /// <summary>
+        /// The Holy Stack Trace.
+        /// </summary>
         StackTrace,
-        /**
-         * {@link Configuration} fields state on the application start.
-         * @see Configuration
-         */
+        /// <summary>
+        /// Fields state on the application start.
+        /// see Configuration
+        /// </summary>
         InitialConfiguration,
-        /**
-         * {@link Configuration} fields state on the application crash.
-         * @see Configuration
-         */
+        /// <summary>
+        /// Fields state on the application crash.
+        /// see Configuration
+        /// </summary>
         CrashConfiguration,
-        /**
-         * Device display specifications.
-         * @see android.view.WindowManager#getDefaultDisplay()
-         */
+        /// <summary>
+        /// Device display specifications.
+        /// see android.view.WindowManager#getDefaultDisplay()
+        /// </summary>
         Display,
-        /**
-         * Comment added by the user in the CrashReportDialog displayed in
-         * {@link ReportingInteractionMode#NOTIFICATION} mode.
-         */
+        /// <summary>
+        /// Comment added by the user in the CrashReportDialog displayed in
+        /// ReportingInteractionMode#NOTIFICATION} mode.
+        /// </summary>
         UserComment,
-        /**
-         * User date on application start.
-         */
+        /// <summary>
+        /// User date on application start.
+        /// </summary>
         UserAppStartDate,
-        /**
-         * User date immediately after the crash occurred.
-         */
+        /// <summary>
+        /// User date immediately after the crash occurred.
+        /// </summary>
         UserCrashDate,
-        /**
-         * Memory state details for the application process.
-         */
+        /// <summary>
+        /// Memory state details for the application process.
+        /// </summary>
         DumpsysMeminfo,
-        /**
-         * Logcat default extract. Requires READ_LOGS permission.
-         */
+        /// <summary>
+        /// Logcat default extract. Requires READ_LOGS permission.
+        /// </summary>
         Logcat,
-        /**
-         * Logcat eventslog extract. Requires READ_LOGS permission.
-         */
+        /// <summary>
+        /// Logcat eventslog extract. Requires READ_LOGS permission.
+        /// </summary>
         Eventslog,
-        /**
-         * Logcat radio extract. Requires READ_LOGS permission.
-         */
+        /// <summary>
+        /// Logcat radio extract. Requires READ_LOGS permission.
+        /// </summary>
         Radiolog,
-        /**
-         * True if the report has been explicitly sent silently by the developer.
-         */
+        /// <summary>
+        /// True if the report has been explicitly sent silently by the developer.
+        /// </summary>
         IsSilent,
-        /**
-         * Device unique ID (IMEI). Requires READ_PHONE_STATE permission.
-         */
+        /// <summary>
+        /// Device unique ID (IMEI). Requires READ_PHONE_STATE permission.
+        /// </summary>
         DeviceID,
-        /**
-         * Installation unique ID. This identifier allow you to track a specific
-         * user application installation without using any personal data.
-         */
+        /// <summary>
+        /// Installation unique ID. This identifier allow you to track a specific
+        /// user application installation without using any personal data.
+        /// </summary>
         InstallationID,
-        /**
-         * Features declared as available on this device by the system.
-         */
+        /// <summary>
+        /// Features declared as available on this device by the system.
+        /// </summary>
         DeviceFeatures,
-        /**
-         * External storage state and standard directories.
-         */
+        /// <summary>
+        /// External storage state and standard directories.
+        /// </summary>
         Environment,
-        /**
-         * System settings.
-         */
+        /// <summary>
+        /// System settings.
+        /// </summary>
         SettingsSystem,
-        /**
-         * Secure settings (applications can't modify them).
-         */
+        /// <summary>
+        /// Secure settings (applications can't modify them).
+        /// </summary>
         SettingsSecure,
-        /**
-         * SharedPreferences contents
-         */
+        /// <summary>
+        /// SharedPreferences contents
+        /// </summary>
         SharedPreferences
     }
 }

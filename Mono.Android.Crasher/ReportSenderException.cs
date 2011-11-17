@@ -1,8 +1,11 @@
-﻿using System.Runtime.Serialization;
-using Exception = System.Exception;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Mono.Android.Crasher
 {
+    /// <summary>
+    /// This exception is thrown when an error ocurred while sending crash data in a IReportSender implementation.
+    /// </summary>
     public class ReportSenderException : Exception
     {
         public ReportSenderException()

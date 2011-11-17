@@ -5,10 +5,21 @@ using System.Text;
 
 namespace Mono.Android.Crasher.Data.Collectors
 {
+    /// <summary>
+    /// Executes logcat commands and collects it's output.
+    /// </summary>
     static class LogCatCollector
     {
-        private const int DEFAULT_TAIL_COUNT = 100;
+        /// <summary>
+        /// Default number of latest lines kept from the logcat output.
+        /// </summary>
+        private const int DefaultTailCount = 100;
 
+        /// <summary>
+        /// Executes the logcat command with arguments taken from CrasherAttribute.LogcatArguments.
+        /// </summary>
+        /// <param name="bufferName">The name of the buffer to be read: "main" (default), "radio" or "events".</param>
+        /// <returns>A string containing the latest lines of the output.</returns>
         public static string CollectLogCat(string bufferName)
         {
             var commandLine = new List<string> { "logcat" };
@@ -24,7 +35,7 @@ namespace Mono.Android.Crasher.Data.Collectors
             if (tailIndex > -1 && tailIndex < logcatArgumentsList.Count)
             {
                 tailCount = int.Parse(logcatArgumentsList[tailIndex + 1]);
-                if (Compatibility.APILevel < 8)
+                if (Compatibility.ApiLevel < 8)
                 {
                     logcatArgumentsList.RemoveAt(tailIndex + 1);
                     logcatArgumentsList.RemoveAt(tailIndex);
@@ -36,7 +47,7 @@ namespace Mono.Android.Crasher.Data.Collectors
                 tailCount = -1;
             }
 
-            var logcatBuf = new StringBuilder(tailCount > 0 ? tailCount : DEFAULT_TAIL_COUNT);
+            var logcatBuf = new StringBuilder(tailCount > 0 ? tailCount : DefaultTailCount);
             commandLine.AddRange(logcatArgumentsList);
             try
             {

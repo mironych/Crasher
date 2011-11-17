@@ -20,7 +20,7 @@ namespace CrasherTestApp
             var button = FindViewById<Button>(Resource.Id.MyButton);
             button.Click += delegate
                                 {
-                                    throw new NullReferenceException("Testing  exception handling");
+                                    throw new NullReferenceException("Testing exception handling");
                                 };
         }
     }

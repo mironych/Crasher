@@ -7,9 +7,7 @@ using Mono.Android.Crasher.Attributes;
 
 namespace Mono.Android.Crasher.Data.Submit
 {
-    /// <summary>
-    /// Not working because of some MonoDroid problems with SSL certs
-    /// </summary>
+    [Obsolete("Not working because of some MonoDroid problems with SSL certs")]
     public class EmailReportSender : IReportSender
     {
         private EmailReporterSettingsAttribute _config;

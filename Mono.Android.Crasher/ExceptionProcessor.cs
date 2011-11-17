@@ -1,19 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Runtime;
 using Android.Text.Format;
 using Android.Util;
+using Android.Widget;
 using Java.Lang;
 using Mono.Android.Crasher.Data;
 using Mono.Android.Crasher.Data.Submit;
 using Mono.Android.Crasher.Utils;
 using Exception = System.Exception;
-using Object = Java.Lang.Object;
+
 
 namespace Mono.Android.Crasher
 {
-    class ExceptionProcessor : Object
+    /// <summary>
+    /// Proccess exceptions by building and sending reports.
+    /// </summary>
+    class ExceptionProcessor : IDisposable
     {
         private readonly Context _context;
         private readonly ReportField[] _reportFields;
@@ -40,6 +45,10 @@ namespace Mono.Android.Crasher
         }
 
         private static readonly object _customReportDataProvidersLocker = new object();
+        /// <summary>
+        /// Adding custom report data provider.
+        /// </summary>
+        /// <param name="sender">Custom report data provider instance.</param>
         public void AddCustomReportDataProvider(ICustomReportDataProvider sender)
         {
             lock (_customReportDataProvidersLocker)
@@ -50,6 +59,10 @@ namespace Mono.Android.Crasher
         }
 
         private static readonly object _reportersListLocker = new object();
+        /// <summary>
+        /// Adding report sender. Thread safe.
+        /// </summary>
+        /// <param name="sender">Report sender instance.</param>
         public void AddReportSender(IReportSender sender)
         {
             lock (_reportersListLocker)
@@ -59,6 +72,10 @@ namespace Mono.Android.Crasher
             }
         }
 
+        /// <summary>
+        /// Removing report sender. Thread safe.
+        /// </summary>
+        /// <param name="sender">Report sender instance.</param>
         public void RemoveReportSender(IReportSender sender)
         {
             lock (_reportersListLocker)
@@ -68,6 +85,10 @@ namespace Mono.Android.Crasher
             }
         }
 
+        /// <summary>
+        /// Build and send report for Exception
+        /// </summary>
+        /// <param name="th">Throwable that caused exception</param>
         public void ProcessException(Throwable th)
         {
             Log.Error(Constants.LOG_TAG, "Caught a " + th.GetType().Name + " exception for " + _context.PackageName + ". Start building report.");
@@ -115,10 +136,9 @@ namespace Mono.Android.Crasher
             Log.Debug(Constants.LOG_TAG, "Report was builded and sent");
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
             AndroidEnvironment.UnhandledExceptionRaiser -= AndroidEnvironmentUnhandledExceptionRaiser;
-            base.Dispose();
         }
     }
 }

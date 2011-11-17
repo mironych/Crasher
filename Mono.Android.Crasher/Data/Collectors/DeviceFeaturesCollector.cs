@@ -5,11 +5,19 @@ using System.Text;
 
 namespace Mono.Android.Crasher.Data.Collectors
 {
+    /// <summary>
+    /// Features declared as available on the device. Available only with API level > 7.
+    /// </summary>
     static class DeviceFeaturesCollector
     {
+        /// <summary>
+        /// Get device available features as string
+        /// </summary>
+        /// <param name="ctx">Context for the application being reported.</param>
+        /// <returns>String of available features</returns>
         public static string GetFeatures(Context ctx)
         {
-            if (Compatibility.APILevel < 7)
+            if (Compatibility.ApiLevel < 7)
             {
                 return "Data available only with API Level >= 7";
             }

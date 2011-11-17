@@ -7,8 +7,18 @@ using Android.Util;
 
 namespace Mono.Android.Crasher.Data.Collectors
 {
+    /// <summary>
+    /// Helper to collect data from System and Secure Settings classes.
+    /// </summary>
     static class SettingsCollector
     {
+        /// <summary>
+        /// Collect data from Android.Provider.Settings.System. 
+        /// This collector uses reflection to be sure to always get the most accurate data
+        /// whatever Android API level it runs on.
+        /// </summary>
+        /// <param name="ctx">Context for the application being reported.</param>
+        /// <returns>A human readable String containing one key=value pair per line.</returns>
         public static string CollectSystemSettings(Context ctx)
         {
             var result = new StringBuilder();
@@ -34,6 +44,13 @@ namespace Mono.Android.Crasher.Data.Collectors
             return result.ToString();
         }
 
+        /// <summary>
+        /// Collect data from Android.Provider.Settings.Secure. 
+        /// This collector uses reflection to be sure to always get the most accurate data
+        /// whatever Android API level it runs on.
+        /// </summary>
+        /// <param name="ctx">Context for the application being reported.</param>
+        /// <returns>A human readable String containing one key=value pair per line.</returns>
         public static string CollectSecureSettings(Context ctx)
         {
             var result = new StringBuilder();
