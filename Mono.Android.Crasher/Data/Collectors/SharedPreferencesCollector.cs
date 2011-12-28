@@ -2,18 +2,19 @@
 using System.Text;
 using Android.Content;
 using Android.Preferences;
+using Mono.Android.Crasher.Attributes;
 
 namespace Mono.Android.Crasher.Data.Collectors
 {
     /// <summary>
-    /// Collects data from SharedPreferences files
+    /// Collects data from <see cref="ISharedPreferences"/> files
     /// </summary>
     static class SharedPreferencesCollector
     {
         /// <summary>
-        /// Collects data from preferences files setuped in CrasherAttribute.AdditionalSharedPreferences 
+        /// Collects data from preferences files setuped in <see cref="CrasherAttribute.AdditionalSharedPreferences"/>
         /// </summary>
-        /// <param name="context">Context for the application being reported.</param>
+        /// <param name="context"><see cref="Context"/> for the application being reported.</param>
         /// <returns>>A human readable String containing one key=value pair per line.</returns>
         public static string Collect(Context context)
         {

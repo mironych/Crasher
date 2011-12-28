@@ -6,7 +6,7 @@ using System.Text;
 namespace Mono.Android.Crasher.Data
 {
     /// <summary>
-    /// Stores a crash reports data with Mono.Android.Crasher.ReportField enum values as keys.
+    /// Stores a crash reports data with <see cref="ReportField"/> enum values as keys.
     /// </summary>
     public class ReportData : IDictionary<string, string>
     {

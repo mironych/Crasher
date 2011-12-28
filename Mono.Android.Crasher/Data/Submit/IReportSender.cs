@@ -7,7 +7,7 @@ namespace Mono.Android.Crasher.Data.Submit
         /// <summary>
         /// Basic initialization of report sender
         /// </summary>
-        /// <param name="application">Application instance being reported.</param>
+        /// <param name="application"><see cref="Application"/> instance being reported.</param>
         void Initialize(Application application);
         /// <summary>
         /// Method tp send builded report

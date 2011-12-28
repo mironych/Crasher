@@ -2,6 +2,7 @@
 using System.IO;
 using Android.Util;
 using System.Text;
+using Mono.Android.Crasher.Attributes;
 
 namespace Mono.Android.Crasher.Data.Collectors
 {
@@ -16,7 +17,7 @@ namespace Mono.Android.Crasher.Data.Collectors
         private const int DefaultTailCount = 100;
 
         /// <summary>
-        /// Executes the logcat command with arguments taken from CrasherAttribute.LogcatArguments.
+        /// Executes the logcat command with arguments taken from <see cref="CrasherAttribute.LogcatArguments"/>.
         /// </summary>
         /// <param name="bufferName">The name of the buffer to be read: "main" (default), "radio" or "events".</param>
         /// <returns>A string containing the latest lines of the output.</returns>

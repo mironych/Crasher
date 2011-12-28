@@ -12,18 +12,18 @@ using Environment = Android.OS.Environment;
 namespace Mono.Android.Crasher.Data
 {
     /// <summary>
-    /// Responsible for creating the CrashReportData for an Exception.
+    /// Responsible for creating the <see cref="ReportData"/> for an <see cref="Exception"/>.
     /// </summary>
     static class ReportDataFactory
     {
         /// <summary>
         /// Collects crash data.
         /// </summary>
-        /// <param name="context">Context for the application being reported.</param>
-        /// <param name="reportFields">Array of ReportField to include in report</param>
-        /// <param name="appStartDate">Date of application start</param>
+        /// <param name="context"><see cref="Context"/> for the application being reported.</param>
+        /// <param name="reportFields"><see cref="Array"/> of <see cref="ReportField"/> to include in report</param>
+        /// <param name="appStartDate"><see cref="Time"/> of application start</param>
         /// <param name="initialConfiguration">Application initial configuration</param>
-        /// <param name="th">Throwable that caused the crash.</param>
+        /// <param name="th"><see cref="Java.Lang.Throwable"/> that caused the crash.</param>
         /// <param name="isSilentReport">Whether to report this report as being sent silently.</param>
         /// <returns>Builded report data</returns>
         public static ReportData BuildReportData(Context context, ReportField[] reportFields, Time appStartDate, string initialConfiguration, Java.Lang.Throwable th, bool isSilentReport)

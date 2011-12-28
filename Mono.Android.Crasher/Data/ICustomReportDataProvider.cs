@@ -8,8 +8,8 @@ namespace Mono.Android.Crasher.Data
         /// <summary>
         /// Allows to insert custom data in crush report.
         /// </summary>
-        /// <param name="context">Context for the application being reported.</param>
-        /// <returns>Dictionary with custom data fields.</returns>
+        /// <param name="context"><see cref="Context"/> for the application being reported.</param>
+        /// <returns><see cref="IDictionary{TKey,TValue}"/> with custom data fields.</returns>
         IDictionary<string, string> GetReportData(Context context);
     }
 }

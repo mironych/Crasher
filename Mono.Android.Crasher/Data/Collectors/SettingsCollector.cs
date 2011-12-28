@@ -8,16 +8,16 @@ using Android.Util;
 namespace Mono.Android.Crasher.Data.Collectors
 {
     /// <summary>
-    /// Helper to collect data from System and Secure Settings classes.
+    /// Helper to collect data from <see cref="Settings.System"/> and <see cref="Settings.Secure"/> Settings classes.
     /// </summary>
     static class SettingsCollector
     {
         /// <summary>
-        /// Collect data from Android.Provider.Settings.System. 
+        /// Collect data from <see cref="Settings.System"/>. 
         /// This collector uses reflection to be sure to always get the most accurate data
         /// whatever Android API level it runs on.
         /// </summary>
-        /// <param name="ctx">Context for the application being reported.</param>
+        /// <param name="ctx"><see cref="Context"/> for the application being reported.</param>
         /// <returns>A human readable String containing one key=value pair per line.</returns>
         public static string CollectSystemSettings(Context ctx)
         {
@@ -45,11 +45,11 @@ namespace Mono.Android.Crasher.Data.Collectors
         }
 
         /// <summary>
-        /// Collect data from Android.Provider.Settings.Secure. 
+        /// Collect data from <see cref="Settings.Secure"/>. 
         /// This collector uses reflection to be sure to always get the most accurate data
         /// whatever Android API level it runs on.
         /// </summary>
-        /// <param name="ctx">Context for the application being reported.</param>
+        /// <param name="ctx"><see cref="Context"/> for the application being reported.</param>
         /// <returns>A human readable String containing one key=value pair per line.</returns>
         public static string CollectSecureSettings(Context ctx)
         {

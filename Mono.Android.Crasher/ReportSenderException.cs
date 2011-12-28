@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Mono.Android.Crasher.Data.Submit;
 
 namespace Mono.Android.Crasher
 {
     /// <summary>
-    /// This exception is thrown when an error ocurred while sending crash data in a IReportSender implementation.
+    /// This exception is thrown when an error ocurred while sending crash data in a <see cref="IReportSender"/> implementation.
     /// </summary>
     public class ReportSenderException : Exception
     {

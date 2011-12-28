@@ -13,7 +13,7 @@ namespace Mono.Android.Crasher.Data.Collectors
         /// <summary>
         /// Get device available features as string
         /// </summary>
-        /// <param name="ctx">Context for the application being reported.</param>
+        /// <param name="ctx"><see cref="Context"/> for the application being reported.</param>
         /// <returns>String of available features</returns>
         public static string GetFeatures(Context ctx)
         {

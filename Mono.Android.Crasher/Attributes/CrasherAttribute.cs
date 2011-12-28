@@ -17,7 +17,7 @@ namespace Mono.Android.Crasher.Attributes
         string[] _logcatArguments = { "-t", "200", "-v", "time" };
 
         /// <summary>
-        /// The interaction mode you want to implement. Default is InteractionMode.Silent
+        /// The interaction mode you want to implement. Default is <see cref="InteractionMode.Silent"/>
         /// </summary>
         public InteractionMode Mode
         {
@@ -36,7 +36,7 @@ namespace Mono.Android.Crasher.Attributes
         }
 
         /// <summary>
-        /// ReportField Array listing the fields to be included in the report.
+        /// <see cref="ReportField"/>  <see cref="Array"/> listing the fields to be included in the report.
         /// </summary>
         public ReportField[] ReportContent
         {
@@ -46,7 +46,7 @@ namespace Mono.Android.Crasher.Attributes
 
         /// <summary>
         /// Add here your SharedPreferences identifier Strings if you use others than your application's default.
-        /// They will be added to the ReportField.SharedPreferences field.
+        /// They will be added to the <see cref="ReportField.SharedPreferences"/> field.
         /// </summary>
         public string[] AdditionalSharedPreferences
         {
@@ -65,15 +65,15 @@ namespace Mono.Android.Crasher.Attributes
 
         private Type[] _customDataProviders;
         /// <summary>
-        /// Array of ICustomReportDataProvider implementations to provide custom data for crash report.
-        /// Used only if UseCustomData set to true.
+        /// Array of <see cref="ICustomReportDataProvider"/> implementations to provide custom data for crash report.
+        /// Used only if <see cref="UseCustomData"/> set to true.
         /// </summary>
         public Type[] CustomDataProviders
         {
             get { return _customDataProviders; }
             set
             {
-                if (!value.All(type => type.GetInterfaces().Contains(typeof(ICustomReportDataProvider))))
+                if (!value.All(type => type.IsAssignableFrom(typeof(ICustomReportDataProvider))))
                 {
                     throw new ArgumentException("Some of types are not an instance of ICustomReportDataProvider");
                 }

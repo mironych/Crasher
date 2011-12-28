@@ -14,7 +14,7 @@ namespace Mono.Android.Crasher.Data.Collectors
         /// <summary>
         /// Retrieves key/value pairs from static Properties of a class.
         /// </summary>
-        /// <param name="someClass">the Type to be inspected</param>
+        /// <param name="someClass">the <see cref="Type"/> to be inspected</param>
         /// <returns>A human readable string with a key=value pair on each line.</returns>
         public static String CollectStaticProperties(Type someClass)
         {

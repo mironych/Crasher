@@ -5,7 +5,6 @@ using Android.Content;
 using Android.Runtime;
 using Android.Text.Format;
 using Android.Util;
-using Android.Widget;
 using Java.Lang;
 using Mono.Android.Crasher.Data;
 using Mono.Android.Crasher.Data.Submit;

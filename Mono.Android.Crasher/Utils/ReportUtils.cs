@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Content;
+using Android.Content.Res;
 using Android.OS;
 using Android.Telephony;
 using Android.Util;
@@ -48,10 +49,10 @@ namespace Mono.Android.Crasher.Utils
         }
 
         /// <summary>
-        /// Returns the DeviceId according to the TelephonyManager.
+        /// Returns the DeviceId according to the <see cref="TelephonyManager"/>.
         /// </summary>
-        /// <param name="context">Context for the application being reported</param>
-        /// <returns>Returns the DeviceId according to the TelephonyManager or null if there is no TelephonyManager.</returns>
+        /// <param name="context"><see cref="Context"/> for the application being reported</param>
+        /// <returns>Returns the DeviceId according to the <see cref="TelephonyManager"/> or null if there is no <see cref="TelephonyManager"/>.</returns>
         public static string GetDeviceId(Context context)
         {
             try
@@ -63,7 +64,7 @@ namespace Mono.Android.Crasher.Utils
             }
             catch (RuntimeException e)
             {
-                Log.Warn(Constants.LOG_TAG, "Couldn't retrieve DeviceId for : " + context.PackageName, e);
+                Log.Warn(Constants.LOG_TAG, e, "Couldn't retrieve DeviceId for : " + context.PackageName);
                 return null;
             }
         }
@@ -71,7 +72,7 @@ namespace Mono.Android.Crasher.Utils
         /// <summary>
         /// Returns Application file path
         /// </summary>
-        /// <param name="context">Context for the application being reported</param>
+        /// <param name="context"><see cref="Context"/> for the application being reported</param>
         /// <returns>Returns Application file path</returns>
         public static string GetApplicationFilePath(Context context)
         {
@@ -85,9 +86,9 @@ namespace Mono.Android.Crasher.Utils
         }
 
         /// <summary>
-        /// Returns a String representation of the content of a Android.View.Display object.
+        /// Returns a String representation of the content of a <see cref="Display"/> object.
         /// </summary>
-        /// <param name="context">Context for the application being reported.</param>
+        /// <param name="context"><see cref="Context"/> for the application being reported.</param>
         /// <returns>A String representation of the content of the default Display of the Window Service.</returns>
         [Obsolete("IWindowManager is not accessible in MonoDroid 1.9.2")]
         public static string GetDisplayDetails(Context context)
@@ -117,15 +118,15 @@ namespace Mono.Android.Crasher.Utils
             }
             catch (RuntimeException e)
             {
-                Log.Warn(Constants.LOG_TAG, "Couldn't retrieve DisplayDetails for : " + context.PackageName, e);
+                Log.Warn(Constants.LOG_TAG, e, "Couldn't retrieve DisplayDetails for : " + context.PackageName);
                 return "Couldn't retrieve Display Details";
             }
         }
 
         /// <summary>
-        /// Returns the current Configuration for this application.
+        /// Returns the current <see cref="Configuration"/> for this application.
         /// </summary>
-        /// <param name="context">Context for the application being reported.</param>
+        /// <param name="context"><see cref="Context"/> for the application being reported.</param>
         /// <returns>A String representation of the current configuration for the application.</returns>
         public static string GetCrashConfiguration(Context context)
         {
@@ -136,7 +137,7 @@ namespace Mono.Android.Crasher.Utils
             }
             catch (RuntimeException e)
             {
-                Log.Warn(Constants.LOG_TAG, "Couldn't retrieve CrashConfiguration for : " + context.PackageName, e);
+                Log.Warn(Constants.LOG_TAG, e, "Couldn't retrieve CrashConfiguration for : " + context.PackageName);
                 return "Couldn't retrieve crash config";
             }
         }

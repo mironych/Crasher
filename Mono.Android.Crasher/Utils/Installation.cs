@@ -20,7 +20,7 @@ namespace Mono.Android.Crasher.Utils
         /// <summary>
         /// Get or create ID of current application installation
         /// </summary>
-        /// <param name="context">Context for the application being reported.</param>
+        /// <param name="context"><see cref="Context"/> for the application being reported.</param>
         /// <returns>ID of current application installation</returns>
         public static string Id(Context context)
         {
@@ -56,7 +56,7 @@ namespace Mono.Android.Crasher.Utils
         /// <summary>
         /// Reads installation ID from file.
         /// </summary>
-        /// <param name="installation">File to read ID from</param>
+        /// <param name="installation"><see cref="File"/> to read ID from</param>
         /// <returns>Application installation ID</returns>
         private static string ReadInstallationFile(File installation)
         {
@@ -76,7 +76,7 @@ namespace Mono.Android.Crasher.Utils
         /// <summary>
         /// Generates and writes ID of application installation to file.
         /// </summary>
-        /// <param name="installation">File to write ID</param>
+        /// <param name="installation"><see cref="File"/> to write ID</param>
         private static void WriteInstallationFile(File installation)
         {
             var o = new FileOutputStream(installation);
